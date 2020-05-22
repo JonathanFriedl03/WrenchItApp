@@ -18,7 +18,7 @@ function loadDataTable() {
                 "data": "id",
                 "render": function (data) {
                     return `<div class="text-center">
-                                <a href="/category/UpSert/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;'>
+                                <a href="/category/Update/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;'>
                                 <i class ='far fa-edit'></i> Edit
                                 &nbsp;
                                 <a onclick=Delete("/category/Delete/${data}") class='btn btn-danger text-white' style='cursor:pointer; width:100px;'>
