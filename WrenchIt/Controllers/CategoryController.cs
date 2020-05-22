@@ -13,9 +13,9 @@ namespace WrenchIt.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly IUnitOfWork  _context;
+        private readonly IRepoWrapper  _context;
 
-        public CategoryController(IUnitOfWork context)
+        public CategoryController(IRepoWrapper context)
         {
             _context = context;
         }
@@ -32,8 +32,9 @@ namespace WrenchIt.Controllers
         {
             return Json(new { data = _context.Category.GetAll() });
         }
+       
         //edit update insert category
-        public IActionResult Update(int? id)
+        public IActionResult UpdateInsert(int? id)
         {
             Category category = new Category();
             if(id == null)
@@ -47,6 +48,26 @@ namespace WrenchIt.Controllers
             }
             return View(category);
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateInsert(Category category)
+        {
+            if (ModelState.IsValid)
+            {
+                if(category.Id == 0)
+                {
+                    _context.Category.Add(category);
+                }
+                else
+                {
+                    _context.Category.Update(category);
+                }
+                _context.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(category);
+        }
+
         // GET: Category/Details/5
 //        public async Task<IActionResult> Details(int? id)
 //        {

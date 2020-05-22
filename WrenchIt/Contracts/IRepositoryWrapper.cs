@@ -7,6 +7,7 @@ namespace WrenchIt.Contracts
 {
     interface IRepositoryWrapper
     {
+       
         ICustomerRepository Customer { get; }
         //Add other relevant models here { get; }
         void Save();

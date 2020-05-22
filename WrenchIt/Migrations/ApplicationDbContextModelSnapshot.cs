@@ -48,15 +48,15 @@ namespace WrenchIt.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c43dfdc4-0daa-4918-b655-6b83eab6b08e",
-                            ConcurrencyStamp = "1a55a785-d243-40c1-915e-1622c4929935",
+                            Id = "d521a1a4-9aa7-4bc0-8649-5cdd1edd362c",
+                            ConcurrencyStamp = "cf720fb3-f558-4566-8684-73ef06a5a4a7",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "f2bc0a3c-4be0-4012-84d0-702ee94a22e0",
-                            ConcurrencyStamp = "ef4a7925-0083-4618-a4b1-ca23471085c4",
+                            Id = "6ea8716d-773a-4327-b5a2-6e61d671e89b",
+                            ConcurrencyStamp = "d9b50c42-f110-4ccf-9162-83933ab517c4",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -238,9 +238,8 @@ namespace WrenchIt.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DisplayOrder")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -287,6 +286,25 @@ namespace WrenchIt.Migrations
                     b.HasIndex("IdentityUserId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("WrenchIt.Models.ServiceType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ServiceTypes");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

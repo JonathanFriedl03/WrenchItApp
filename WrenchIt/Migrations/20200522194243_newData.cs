@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WrenchIt.Migrations
 {
-    public partial class rebuild : Migration
+    public partial class newData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -53,11 +53,25 @@ namespace WrenchIt.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
-                    DisplayOrder = table.Column<string>(nullable: false)
+                    DisplayOrder = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ServiceTypes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: false),
+                    Price = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ServiceTypes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,12 +209,12 @@ namespace WrenchIt.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c43dfdc4-0daa-4918-b655-6b83eab6b08e", "1a55a785-d243-40c1-915e-1622c4929935", "Customer", "CUSTOMER" });
+                values: new object[] { "d521a1a4-9aa7-4bc0-8649-5cdd1edd362c", "cf720fb3-f558-4566-8684-73ef06a5a4a7", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f2bc0a3c-4be0-4012-84d0-702ee94a22e0", "ef4a7925-0083-4618-a4b1-ca23471085c4", "Employee", "EMPLOYEE" });
+                values: new object[] { "6ea8716d-773a-4327-b5a2-6e61d671e89b", "d9b50c42-f110-4ccf-9162-83933ab517c4", "Employee", "EMPLOYEE" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -269,6 +283,9 @@ namespace WrenchIt.Migrations
 
             migrationBuilder.DropTable(
                 name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "ServiceTypes");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

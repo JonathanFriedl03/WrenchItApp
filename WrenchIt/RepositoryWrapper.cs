@@ -7,7 +7,7 @@ using WrenchIt.Data;
 
 namespace WrenchIt
 {
-    public class RepositoryWrapper : IRepositoryWrapper
+    public class RepositoryWrapper 
     {
         private ApplicationDbContext _context;
         private ICustomerRepository _customer;

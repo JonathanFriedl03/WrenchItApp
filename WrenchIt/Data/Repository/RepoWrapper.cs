@@ -4,14 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using WrenchIt.Data.Repository.IRepository;
 using WrenchIt.Models;
+using WrenchIt.Contracts;
 
 namespace WrenchIt.Data.Repository
 {
-    public class UnitOfWork : IUnitOfWork
+    public class RepoWrapper : IRepoWrapper
     {
         private readonly ApplicationDbContext _context;
 
-        public UnitOfWork(ApplicationDbContext context)
+        public RepoWrapper(ApplicationDbContext context)
         {
             _context = context;
             Category = new CategoryRepository(_context);

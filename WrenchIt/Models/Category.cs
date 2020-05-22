@@ -14,7 +14,7 @@ namespace WrenchIt.Models
         public string Name { get; set; }
         [Required]
         [Display(Name = "Display Order")]
-        public string DisplayOrder { get; set; }
+        public int DisplayOrder { get; set; }
 
     }
 }

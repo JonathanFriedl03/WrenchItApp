@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WrenchIt.Data.Repository.IRepository
 {
-    public interface IUnitOfWork : IDisposable
+    public interface IRepoWrapper : IDisposable
     {
         //single transactions
         ICategoryRepository Category { get; }
