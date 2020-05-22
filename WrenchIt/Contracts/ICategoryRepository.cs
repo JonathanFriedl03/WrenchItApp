@@ -7,7 +7,7 @@ using WrenchIt.Models;
 
 namespace WrenchIt.Data.Repository.IRepository
 {
-    public interface ICategoryRepository : IRepository<Category>
+    public interface ICategoryRepository : IRepoBase<Category>
     {
         IEnumerable<SelectListItem> GetCategoryListForDropDown();
 

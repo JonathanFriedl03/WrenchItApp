@@ -4,38 +4,81 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using WrenchIt.Contracts;
-using WrenchIt.Data;
+using WrenchIt.Data.Repository.IRepository;
 
-namespace WrenchIt
+namespace WrenchIt.Data.Repository
 {
-    public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
+    public class RepositoryBase<T> : IRepoBase<T> where T : class
     {
-        protected ApplicationDbContext ApplicationDbContext { get; set; }
-        public RepositoryBase(ApplicationDbContext applicationDbContext)
-        {
-            ApplicationDbContext = applicationDbContext;
-        }
-        public IQueryable<T> FindAll()
-        {
-            return ApplicationDbContext.Set<T>().AsNoTracking();
-        }
-        public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
-        {
-            return ApplicationDbContext.Set<T>().Where(expression).AsNoTracking();
-        }
-        public void Create(T entity)
-        {
-            ApplicationDbContext.Set<T>().Add(entity);
-        }
-        public void Update(T entity)
-        {
-            ApplicationDbContext.Set<T>().Update(entity);
-        }
-        public void Delete(T entity)
-        {
+        protected readonly DbContext Context;
+        internal DbSet<T> dbSet;
 
-            ApplicationDbContext.Set<T>().Remove(entity);
+        public RepositoryBase(DbContext context)
+        {
+            Context = context;
+            this.dbSet = context.Set<T>();
+        }
+        public void Add(T entity)
+        {
+            dbSet.Add(entity);
+        }
+
+        public T Get(int id)
+        {
+            return dbSet.Find(id); 
+        }
+
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
+        {
+            //need to impliment all of the methods
+            IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            //include properties have commas
+            if(includeProperties != null)
+            {
+                foreach(var includeProperty in includeProperties.Split(new char[] { ','}, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperties);
+                }
+            }
+            if(orderBy != null)
+            {
+                return orderBy(query).ToList();
+            }
+            return query.ToList();
+        }
+
+        public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
+        {
+            //need to impliment all of the methods
+            IQueryable<T> query = dbSet;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            //include properties have commas
+            if (includeProperties != null)
+            {
+                foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProperties);
+                }
+            }
+            return query.FirstOrDefault();
+        }
+
+        public void Remove(T entity)
+        {
+            dbSet.Remove(entity);
+        }
+
+        public void Remove(int id)
+        {
+            T entityToRemove = dbSet.Find(id);
+            Remove(entityToRemove);
         }
     }
 }

@@ -8,7 +8,7 @@ using WrenchIt.Models;
 
 namespace WrenchIt.Data.Repository
 {
-    public class CategoryRepository : Repository<Category>, ICategoryRepository
+    public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
 
