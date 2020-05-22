@@ -23,11 +23,10 @@ function loadDataTable() {
                                 &nbsp;
                                 <a onclick=Delete("/category/Delete/${data}") class='btn btn-danger text-white' style='cursor:pointer; width:100px;'>
                                 <i class ='far fa-trash-alt'></i> Delete
-                            </div>
-                                `;
+                            </div>`;
                 }, "width": "30%"
             }
-        ],
+        ],//display data when there is none
         "language": {
             "emptyTable": "No records found."
         },

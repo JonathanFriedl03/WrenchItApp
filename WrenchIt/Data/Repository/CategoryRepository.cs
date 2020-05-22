@@ -20,7 +20,7 @@ namespace WrenchIt.Data.Repository
         public IEnumerable<SelectListItem> GetCategoryListForDropDown()
         {
            return _context.Category.Select(i => new SelectListItem()
-           { //add properties to dropdown list
+           { 
                 Text = i.Name,
                 Value = i.Id.ToString()
            });
@@ -28,7 +28,6 @@ namespace WrenchIt.Data.Repository
 
         public void Update(Category category)
         {
-            //retrieve object from db by id 
             var  objFromDb = _context.Category.FirstOrDefault(i => i.Id == category.Id);
 
             objFromDb.Name = category.Name;

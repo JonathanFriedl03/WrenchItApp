@@ -26,6 +26,27 @@ namespace WrenchIt.Controllers
             return View();
         }
 
+        //make api call for datatables.net  
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Json(new { data = _context.Category.GetAll() });
+        }
+        //edit update insert category
+        public IActionResult Update(int? id)
+        {
+            Category category = new Category();
+            if(id == null)
+            {
+                return View(category);
+            }
+            category = _context.Category.Get(id.GetValueOrDefault());
+            if(category == null)
+            {
+                return NotFound();
+            }
+            return View(category);
+        }
         // GET: Category/Details/5
 //        public async Task<IActionResult> Details(int? id)
 //        {

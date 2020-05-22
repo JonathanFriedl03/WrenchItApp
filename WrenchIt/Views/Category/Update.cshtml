@@ -1,0 +1,17 @@
+﻿@model WrenchIt.Models.Category
+@{
+    ViewData["Title"] = "Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*create a form for new order request*@
+<form method="post" asp-action="Update">
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @if(Model.Id != 0)
+        {
+            <input type="hidden" asp-for="Id" />
+            title = "Edit Category";
+        }
+    </div>
+</form>
+
