@@ -1,0 +1,38 @@
+﻿@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Service List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a asp-action="UpdateInsert" class="btn btn-primary"><i class="fas fa-plus"></i> &nbsp; Create New Service</a>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    <table id="tblData" class="table table table-striped table-bordered" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Category Name</th>
+                <th>Price</th>
+
+
+            </tr>
+        </thead>
+    </table>
+</div>
+<script>
+
+</script>
+
+
+@section Scripts{
+       <script src="~/js/service.js"></script>
+}

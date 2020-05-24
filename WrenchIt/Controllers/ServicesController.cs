@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,17 +12,19 @@ using WrenchIt.Models;
 
 namespace WrenchIt.Controllers
 {
-    public class CategoryController : Controller
+    public class ServicesController : Controller
     {
         private readonly IRepoWrapper  _context;
+        private readonly IWebHostEnvironment  _hostEnvironment;
 
-        public CategoryController(IRepoWrapper context)
+        public ServicesController(IRepoWrapper context,IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         // GET: Category
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
@@ -30,7 +33,7 @@ namespace WrenchIt.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Category.GetAll() });
+            return Json(new { data = _context.Services.GetAll(includeProperties:"Category") });
         }
        
         //edit update insert category

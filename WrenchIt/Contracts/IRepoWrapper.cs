@@ -9,7 +9,7 @@ namespace WrenchIt.Data.Repository.IRepository
     {
         //single transactions
         ICategoryRepository Category { get; }
-        IServiceRepository Service { get; }
+        IServiceRepository Services { get; }
         public void Save();
 
     }
