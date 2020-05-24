@@ -10,8 +10,8 @@ using WrenchIt.Data;
 namespace WrenchIt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200524150546_newModel")]
-    partial class newModel
+    [Migration("20200524163212_nuke")]
+    partial class nuke
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace WrenchIt.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "ca45ee67-5943-42c1-887e-5d18682ef66d",
-                            ConcurrencyStamp = "c9498afd-513d-4fd7-8f24-f592c519985d",
+                            Id = "0c9e5b17-4141-4788-8893-53c9790cab5d",
+                            ConcurrencyStamp = "9c292c5d-f44a-434e-ab85-7f83adb22b4c",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "8fc5473e-c232-46ea-b89b-c65ad6252a99",
-                            ConcurrencyStamp = "bdce3ca6-38de-4402-b1ad-dad307973207",
+                            Id = "81703c6c-d423-4d95-a1ca-d9b1b53fec4a",
+                            ConcurrencyStamp = "ebd83970-5d9f-46dc-bca5-8e171a9ba945",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -297,7 +297,7 @@ namespace WrenchIt.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CategoryId")
+                    b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -401,7 +401,9 @@ namespace WrenchIt.Migrations
                 {
                     b.HasOne("WrenchIt.Models.Category", "Category")
                         .WithMany()
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

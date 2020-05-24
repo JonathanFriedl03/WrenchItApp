@@ -26,7 +26,7 @@ namespace WrenchIt.Controllers
             return View();
         }
 
-        //make api call for datatables.net  
+        //make api call for category.js 
         [HttpGet]
         public IActionResult GetAll()
         {

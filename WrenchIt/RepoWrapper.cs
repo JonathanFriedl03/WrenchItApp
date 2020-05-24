@@ -16,9 +16,11 @@ namespace WrenchIt.Data.Repository
         {
             _context = context;
             Category = new CategoryRepository(_context);
+            Service = new ServiceRepository(_context);
         }
 
         public ICategoryRepository Category { get; set; }
+        public IServiceRepository Service { get; set; }
 
         public void Dispose()
         {
