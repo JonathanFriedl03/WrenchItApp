@@ -2,51 +2,48 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using WrenchIt.Data.Repository.IRepository;
+using WrenchIt.Models;
 
 namespace WrenchIt.Controllers
 {
-
     public class ServicesController : Controller
     {
+        
+        private readonly IRepoWrapper _context;
+        private readonly IWebHostEnvironment _hostEnvironment;
+        [BindProperty]
+        public ServiceViewModel ServVM { get; set; }
+
+        public IEnumerable<SelectListItem> CategoryList { get; private set; }
+
+        public ServicesController(IRepoWrapper context, IWebHostEnvironment hostEnvironment)
+        {
+            _context = context;
+            _hostEnvironment = hostEnvironment;
+        }
+
         // GET: Services
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }
-
-        // GET: Services/Details/5
-        public ActionResult Details(int id)
+        public IActionResult UpdateInsert(int? id)
         {
-            return View();
-        }
-
-        // GET: Services/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Services/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
+            ServiceViewModel serviceViewModel = new ServiceViewModel()
             {
-                // TODO: Add insert logic here
+                Service = new Service(),
+                CategoryList = _context.Category.GetCategoryListForDropDown()
+            };
+            return View(serviceViewModel);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
-
-        // GET: Services/Edit/5
-        public ActionResult Edit(int id)
+            // GET: Services/Edit/5
+            public ActionResult Edit(int id)
         {
             return View();
         }
