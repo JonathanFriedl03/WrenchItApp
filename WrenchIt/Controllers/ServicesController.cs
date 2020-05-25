@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -16,10 +17,9 @@ namespace WrenchIt.Controllers
         
         private readonly IRepoWrapper _context;
         private readonly IWebHostEnvironment _hostEnvironment;
-        [BindProperty]
-        public ServiceViewModel ServVM { get; set; }
+      
 
-        public IEnumerable<SelectListItem> CategoryList { get; private set; }
+       //public IEnumerable<SelectListItem> CategoryList { get; set; }
 
         public ServicesController(IRepoWrapper context, IWebHostEnvironment hostEnvironment)
         {
@@ -27,28 +27,98 @@ namespace WrenchIt.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
-        // GET: Services
+        // GET: Service
         public async Task<IActionResult> Index()
         {
             return View();
         }
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Json(new { data = _context.Services.GetAll() });
+        }
+
         public IActionResult UpdateInsert(int? id)
         {
-            ServiceViewModel serviceViewModel = new ServiceViewModel()
+            Service service = new Service();
+            
+            
+            if (id != null)
             {
-                Service = new Service(),
-                CategoryList = _context.Category.GetCategoryListForDropDown()
-            };
-            return View(serviceViewModel);
+                service = _context.Services.Get(id.GetValueOrDefault());
+            }
+            return View(service);
 
         }
-            // GET: Services/Edit/5
-            public ActionResult Edit(int id)
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult UpdateInsert(Service service)
+        {
+            if (ModelState.IsValid)
+            {
+                string webRootPath = _hostEnvironment.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
+                if (service.Id == 0)
+                {
+                    //new service
+                    string fileName = Guid.NewGuid().ToString();
+                    var uploads = Path.Combine(webRootPath, @"images\servicePics");
+                    var extension = Path.GetExtension(files[0].FileName);
+
+                    using (var fileStream = new FileStream(Path.Combine(uploads, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+                    service.ImageUrl = @"\images\servicePics" + fileName + extension;
+                    _context.Services.Add(service);
+                }
+                else
+                {
+                    //edit service
+                    var serviceFromDb = _context.Services.Get(service.Id);
+                    if (files.Count > 0)
+                    {
+                        string fileName = Guid.NewGuid().ToString();
+                        var uploads = Path.Combine(webRootPath, @"images\servicePics");
+                        var newExtension = Path.GetExtension(files[0].FileName);
+
+                        var imagePath = Path.Combine(webRootPath, serviceFromDb.ImageUrl.TrimStart('\\'));
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+
+                        using (var fileStream = new FileStream(Path.Combine(uploads, fileName + newExtension), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+                        service.ImageUrl = @"\images\servicePics\" + fileName + newExtension;
+
+                    }
+                    else
+                    {
+                        service.ImageUrl = serviceFromDb.ImageUrl;
+                    }
+                    _context.Services.Update(service);
+                }
+                _context.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(service);
+            }
+        }
+        // GET: Service/Edit/5
+        public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Services/Edit/5
+        // POST: Service/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -65,13 +135,13 @@ namespace WrenchIt.Controllers
             }
         }
 
-        // GET: Services/Delete/5
+        // GET: Service/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Services/Delete/5
+        // POST: Service/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
