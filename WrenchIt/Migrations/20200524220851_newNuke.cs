@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WrenchIt.Migrations
 {
-    public partial class nuke : Migration
+    public partial class newNuke : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -232,12 +232,12 @@ namespace WrenchIt.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "0c9e5b17-4141-4788-8893-53c9790cab5d", "9c292c5d-f44a-434e-ab85-7f83adb22b4c", "Customer", "CUSTOMER" });
+                values: new object[] { "07f7f11a-1ff7-4fa6-bd3e-1a2ed3b0e436", "34888cc5-8980-4c80-9bd2-e0edbc845d6c", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "81703c6c-d423-4d95-a1ca-d9b1b53fec4a", "ebd83970-5d9f-46dc-bca5-8e171a9ba945", "Employee", "EMPLOYEE" });
+                values: new object[] { "c271c79f-f812-4468-93d5-b189eebc2ca0", "37025f7e-303b-439f-8655-4400dc168164", "Employee", "EMPLOYEE" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

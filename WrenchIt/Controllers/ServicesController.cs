@@ -2,210 +2,93 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WrenchIt.Data;
-using WrenchIt.Data.Repository.IRepository;
-using WrenchIt.Models;
 
 namespace WrenchIt.Controllers
 {
+
     public class ServicesController : Controller
     {
-        private readonly IRepoWrapper  _context;
-        private readonly IWebHostEnvironment  _hostEnvironment;
-
-        public ServicesController(IRepoWrapper context,IWebHostEnvironment hostEnvironment)
-        {
-            _context = context;
-            _hostEnvironment = hostEnvironment;
-        }
-
-        // GET: Category
-        public async Task<IActionResult> Index()
+        // GET: Services
+        public ActionResult Index()
         {
             return View();
         }
 
-        //make api call for category.js 
-        [HttpGet]
-        public IActionResult GetAll()
+        // GET: Services/Details/5
+        public ActionResult Details(int id)
         {
-            return Json(new { data = _context.Services.GetAll(includeProperties:"Category") });
+            return View();
         }
-       
-        //edit update insert category
-        public IActionResult UpdateInsert(int? id)
+
+        // GET: Services/Create
+        public ActionResult Create()
         {
-            Category category = new Category();
-            if(id == null)
-            {
-                return View(category);
-            }
-            category = _context.Category.Get(id.GetValueOrDefault());
-            if(category == null)
-            {
-                return NotFound();
-            }
-            return View(category);
+            return View();
         }
+
+        // POST: Services/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateInsert(Category category)
+        public ActionResult Create(IFormCollection collection)
         {
-            if (ModelState.IsValid)
+            try
             {
-                if(category.Id == 0)
-                {
-                    _context.Category.Add(category);
-                }
-                else
-                {
-                    _context.Category.Update(category);
-                }
-                _context.Save();
+                // TODO: Add insert logic here
+
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
-        }
-
-        [HttpDelete]
-        public IActionResult Delete(int id)
-        {
-            var objectFromDb = _context.Category.Get(id);
-            if (objectFromDb == null)
+            catch
             {
-                return Json(new { success = false, message = "Unable to delete." });
+                return View();
             }
-            _context.Category.Remove(objectFromDb);
-            _context.Save();
-            return Json(new { success = true, message = "Delete successfull." });
         }
 
-        // GET: Category/Details/5
-        //        public async Task<IActionResult> Details(int? id)
-        //        {
-        //            if (id == null)
-        //            {
-        //                return NotFound();
-        //            }
+        // GET: Services/Edit/5
+        public ActionResult Edit(int id)
+        {
+            return View();
+        }
 
-        //            var category = await _context.Category
-        //                .FirstOrDefaultAsync(m => m.Id == id);
-        //            if (category == null)
-        //            {
-        //                return NotFound();
-        //            }
+        // POST: Services/Edit/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, IFormCollection collection)
+        {
+            try
+            {
+                // TODO: Add update logic here
 
-        //            return View(category);
-        //        }
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
 
-        //        // GET: Category/Create
-        //        public IActionResult Create()
-        //        {
-        //            return View();
-        //        }
+        // GET: Services/Delete/5
+        public ActionResult Delete(int id)
+        {
+            return View();
+        }
 
-        //        // POST: Category/Create
-        //        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //        [HttpPost]
-        //        [ValidateAntiForgeryToken]
-        //        public async Task<IActionResult> Create([Bind("Id,Name,DisplayOrder")] Category category)
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                _context.Add(category);
-        //                await _context.SaveChangesAsync();
-        //                return RedirectToAction(nameof(Index));
-        //            }
-        //            return View(category);
-        //        }
+        // POST: Services/Delete/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, IFormCollection collection)
+        {
+            try
+            {
+                // TODO: Add delete logic here
 
-        //        // GET: Category/Edit/5
-        //        public async Task<IActionResult> Edit(int? id)
-        //        {
-        //            if (id == null)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            var category = await _context.Category.FindAsync(id);
-        //            if (category == null)
-        //            {
-        //                return NotFound();
-        //            }
-        //            return View(category);
-        //        }
-
-        //        // POST: Category/Edit/5
-        //        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        //        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //        [HttpPost]
-        //        [ValidateAntiForgeryToken]
-        //        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DisplayOrder")] Category category)
-        //        {
-        //            if (id != category.Id)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            if (ModelState.IsValid)
-        //            {
-        //                try
-        //                {
-        //                    _context.Update(category);
-        //                    await _context.SaveChangesAsync();
-        //                }
-        //                catch (DbUpdateConcurrencyException)
-        //                {
-        //                    if (!CategoryExists(category.Id))
-        //                    {
-        //                        return NotFound();
-        //                    }
-        //                    else
-        //                    {
-        //                        throw;
-        //                    }
-        //                }
-        //                return RedirectToAction(nameof(Index));
-        //            }
-        //            return View(category);
-        //        }
-
-        //        // GET: Category/Delete/5
-        //        public async Task<IActionResult> Delete(int? id)
-        //        {
-        //            if (id == null)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            var category = await _context.Category.FirstOrDefaultAsync(m => m.Id == id);
-        //            if (category == null)
-        //            {
-        //                return NotFound();
-        //            }
-
-        //            return View(category);
-        //        }
-
-        //        // POST: Category/Delete/5
-        //        [HttpPost, ActionName("Delete")]
-        //        [ValidateAntiForgeryToken]
-        //        public async Task<IActionResult> DeleteConfirmed(int id)
-        //        {
-        //            var category = await _context.Category.FindAsync(id);
-        //            _context.Category.Remove(category);
-        //            await _context.SaveChangesAsync();
-        //            return RedirectToAction(nameof(Index));
-        //        }
-
-        //        private bool CategoryExists(int id)
-        //        {
-        //            return _context.Category.Any(e => e.Id == id);
-        //        }
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

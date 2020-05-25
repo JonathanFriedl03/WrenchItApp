@@ -25,8 +25,9 @@ namespace WrenchIt.Models
         [Display(Name = "Image")]
         public string ImageUrl { get; set; }
 
-        public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
+        public int CategoryId { get; set; }
+       
         public Category Category{ get; set; }
 
 

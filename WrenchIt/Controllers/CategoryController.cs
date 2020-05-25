@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using WrenchIt.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using WrenchIt.Data.Repository.IRepository;
 using WrenchIt.Models;
 
@@ -26,7 +19,7 @@ namespace WrenchIt.Controllers
             return View();
         }
 
-        //make api call for category.js 
+        
         [HttpGet]
         public IActionResult GetAll()
         {
