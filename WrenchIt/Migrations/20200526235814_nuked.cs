@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WrenchIt.Migrations
 {
-    public partial class newNuke : Migration
+    public partial class nuked : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,6 +58,20 @@ namespace WrenchIt.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Category", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Labor",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TimeOfJob = table.Column<double>(nullable: false),
+                    PricePerHour = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Labor", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,7 +230,8 @@ namespace WrenchIt.Migrations
                     Price = table.Column<double>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false),
+                    LaborId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -227,17 +242,23 @@ namespace WrenchIt.Migrations
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Services_Labor_LaborId",
+                        column: x => x.LaborId,
+                        principalTable: "Labor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "07f7f11a-1ff7-4fa6-bd3e-1a2ed3b0e436", "34888cc5-8980-4c80-9bd2-e0edbc845d6c", "Customer", "CUSTOMER" });
+                values: new object[] { "6eef4411-c7dc-45a5-956e-492bca78445c", "4c12562a-60a1-41b5-ad90-9a692a86a456", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "c271c79f-f812-4468-93d5-b189eebc2ca0", "37025f7e-303b-439f-8655-4400dc168164", "Employee", "EMPLOYEE" });
+                values: new object[] { "598b3ad0-8f20-4a1a-8d9d-d645ddd7c3cc", "069ca3c2-0939-4e5f-b07e-04451ff3339a", "Employee", "EMPLOYEE" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -287,6 +308,11 @@ namespace WrenchIt.Migrations
                 name: "IX_Services_CategoryId",
                 table: "Services",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Services_LaborId",
+                table: "Services",
+                column: "LaborId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -323,6 +349,9 @@ namespace WrenchIt.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "Labor");
         }
     }
 }

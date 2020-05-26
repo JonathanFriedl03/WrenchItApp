@@ -30,6 +30,13 @@ namespace WrenchIt.Models
        
         public Category Category{ get; set; }
 
+        [Required]
+        [ForeignKey("LaborId")]
+        public int LaborId { get; set; }
+
+        
+        public Labor Labor { get; set; }
+
 
     }
 }

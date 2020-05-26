@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WrenchIt.Data.Repository.IRepository;
+using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 
 namespace WrenchIt.Controllers

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace WrenchIt.Data.Repository.IRepository
+namespace WrenchIt.Data.RepositoryBase.IRepository
 {
     public interface IRepoBase<T> where T : class
     {

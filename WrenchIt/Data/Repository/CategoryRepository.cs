@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WrenchIt.Data.Repository.IRepository;
+using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 
-namespace WrenchIt.Data.Repository
+namespace WrenchIt.Data.RepositoryBase
 {
     public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {

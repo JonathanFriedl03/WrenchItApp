@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using WrenchIt.Data.Repository.IRepository;
+using WrenchIt.Data.RepositoryBase.IRepository;
 
-namespace WrenchIt.Data.Repository
+namespace WrenchIt.Data.RepositoryBase
 {
     public class RepositoryBase<T> : IRepoBase<T> where T : class
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WrenchIt.Models;
 
-namespace WrenchIt.Data.Repository.IRepository
+namespace WrenchIt.Data.RepositoryBase.IRepository
 {
     public interface IServiceRepository : IRepoBase<Service>
     {

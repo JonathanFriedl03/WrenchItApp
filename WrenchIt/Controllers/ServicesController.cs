@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using WrenchIt.Data.Repository.IRepository;
+using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 
 namespace WrenchIt.Controllers
@@ -36,7 +36,7 @@ namespace WrenchIt.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Services.GetAll() });
+            return Json(new { data = _context.Service.GetAll() });
         }
 
         public IActionResult UpdateInsert(int? id)
@@ -46,7 +46,7 @@ namespace WrenchIt.Controllers
             
             if (id != null)
             {
-                service = _context.Services.Get(id.GetValueOrDefault());
+                service = _context.Service.Get(id.GetValueOrDefault());
             }
             return View(service);
 
@@ -72,12 +72,12 @@ namespace WrenchIt.Controllers
                         files[0].CopyTo(fileStream);
                     }
                     service.ImageUrl = @"\images\servicePics" + fileName + extension;
-                    _context.Services.Add(service);
+                    _context.Service.Add(service);
                 }
                 else
                 {
                     //edit service
-                    var serviceFromDb = _context.Services.Get(service.Id);
+                    var serviceFromDb = _context.Service.Get(service.Id);
                     if (files.Count > 0)
                     {
                         string fileName = Guid.NewGuid().ToString();
@@ -102,7 +102,7 @@ namespace WrenchIt.Controllers
                     {
                         service.ImageUrl = serviceFromDb.ImageUrl;
                     }
-                    _context.Services.Update(service);
+                    _context.Service.Update(service);
                 }
                 _context.Save();
                 return RedirectToAction(nameof(Index));
@@ -136,9 +136,24 @@ namespace WrenchIt.Controllers
         }
 
         // GET: Service/Delete/5
-        public ActionResult Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
-            return View();
+            var serviceFromDB = _context.Service.Get(id);
+            string webRootPath = _hostEnvironment.WebRootPath;
+            var imagePath = Path.Combine(webRootPath, serviceFromDB.ImageUrl.TrimStart('\\'));
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+            if (serviceFromDB == null)
+            {
+                return Json(new { success = false, message = "Error while deleting." });                
+            }
+            _context.Service.Remove(serviceFromDB);
+            _context.Save();
+            return Json(new { success = true, message = "Delete successful." });
         }
 
         // POST: Service/Delete/5

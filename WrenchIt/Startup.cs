@@ -15,8 +15,8 @@ using Microsoft.Extensions.Hosting;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using WrenchIt.IActionFilters;
-using WrenchIt.Data.Repository.IRepository;
-using WrenchIt.Data.Repository;
+using WrenchIt.Data.RepositoryBase.IRepository;
+using WrenchIt.Data.RepositoryBase;
 
 namespace WrenchIt
 {

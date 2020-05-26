@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WrenchIt.Data.Repository.IRepository;
+using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 
 
-namespace WrenchIt.Data.Repository
+namespace WrenchIt.Data.RepositoryBase
 {
     public class RepoWrapper : IRepoWrapper
     {
@@ -16,11 +16,12 @@ namespace WrenchIt.Data.Repository
         {
             _context = context;
             Category = new CategoryRepository(_context);
-            Services = new ServiceRepository(_context);
+            Service = new ServiceRepository(_context);
+           // Labor = new LaborRepository(_context);
         }
 
         public ICategoryRepository Category { get; set; }
-        public IServiceRepository Services { get; set; }
+        public IServiceRepository Service { get; set; }
 
         public void Dispose()
         {
