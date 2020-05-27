@@ -10,8 +10,8 @@ using WrenchIt.Data;
 namespace WrenchIt.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200526235814_nuked")]
-    partial class nuked
+    [Migration("20200527172103_nuke")]
+    partial class nuke
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -50,15 +50,15 @@ namespace WrenchIt.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6eef4411-c7dc-45a5-956e-492bca78445c",
-                            ConcurrencyStamp = "4c12562a-60a1-41b5-ad90-9a692a86a456",
+                            Id = "e6df2e61-e189-4037-9f59-d3c29d721011",
+                            ConcurrencyStamp = "b4907a7f-a0e4-4ff3-8f37-54518642bd1d",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "598b3ad0-8f20-4a1a-8d9d-d645ddd7c3cc",
-                            ConcurrencyStamp = "069ca3c2-0939-4e5f-b07e-04451ff3339a",
+                            Id = "e99c1d95-7cba-441e-a697-d46eef103c66",
+                            ConcurrencyStamp = "b0d972b6-1887-43d4-8f72-511eedc2c5d7",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });

@@ -23,7 +23,7 @@ namespace WrenchIt.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Category.GetAll() });
+            return Json(new { data = _context.Category.GetAll()});
         }
 
         // GET: Category/Edit/5

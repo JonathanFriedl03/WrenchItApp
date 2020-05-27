@@ -36,19 +36,24 @@ namespace WrenchIt.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Service.GetAll(includeProperties:"") });
+            return Json(new { data = _context.Service.GetAll(includeProperties:"Category") });
         }
 
         public IActionResult Edit(int? id)
         {
-            Service service = new Service();
+            ServiceViewModel serviceViewModel = new ServiceViewModel()
+            {
+                Service = new Models.Service(),
+                Labor = new Models.Labor(),
+                CategoryList = _context.Category.GetCategoryListForDropDown(),
+            };
             
             
             if (id != null)
             {
-                service = _context.Service.Get(id.GetValueOrDefault());
+                serviceViewModel.Service = _context.Service.Get(id.GetValueOrDefault());
             }
-            return View(service);
+            return View(serviceViewModel);
 
         }
 

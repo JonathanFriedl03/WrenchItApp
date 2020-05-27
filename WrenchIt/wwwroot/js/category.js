@@ -1,11 +1,11 @@
-﻿//var dataTable;
+﻿var dataTable;
 
 $(document).ready(function () {
     loadDataTable();
 });
 
 function loadDataTable() {
-   var dataTable = $('#tblData').DataTable({
+    dataTable = $('#tblData').DataTable({
         "ajax": {
             "url": "/category/GetAll",
             "type": "Get",
@@ -44,16 +44,17 @@ function Delete(url) {
 
     }, function () {
         $.ajax({
-            type: 'Delete',
+            type: 'DELETE',
             url: url,
             success: function (data) {
-                if (data.success) {
-                    dataTable.ajax.reload();
+               if (data.success) {
+                  toastr.success(data.message);
+                  dataTable.ajax.reload();
                 }
                 else {
-                    toastr.error(data.message);
+                      toastr.error(data.message);
+                     }
                 }
-            }
         });
     });
 }

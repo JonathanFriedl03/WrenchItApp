@@ -4,18 +4,18 @@ $(document).ready(function () {
 });
 
 function loadDataTable() {
-    var dataTable = $('#tblData').DataTable({
+     dataTable = $('#tblData').DataTable({
         "ajax": {
             "url": "/services/GetAll",
             "type": "Get",
             "datatype": "json"
         },
         "columns": [
-            { "data": "name", "width": "20%" },
-            //{ "data": "category.name", "width": "20%" },
+            { "data": "serviceName", "width": "20%" },
+            { "data": "category.name", "width": "20%" },
             { "data": "price", "width": "15%" },
-           // { "data": "labor.timeOfJob", "width": "15%" },
-            //{ "data": "labor.pricePerHour", "width": "15%" },
+            { "data": "labor.timeOfJob", "width": "15%" },
+            { "data": "labor.pricePerHour", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {

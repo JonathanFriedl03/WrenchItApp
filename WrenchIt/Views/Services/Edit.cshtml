@@ -1,4 +1,4 @@
-﻿@model WrenchIt.Models.Service
+﻿@model WrenchIt.Models.ServiceViewModel
 @{
     var title = "Create Service";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,9 +8,9 @@
 
     <div class="row px-2 mx-2 backgroundWhite border">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        @if (Model.Id != 0)
+        @if (Model.Service.Id != 0)
         {
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Service.Id" />
             title = "Edit Service";
         }
 
@@ -21,34 +21,52 @@
         <div class="col-9">
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Name"></label>
+                    <label asp-for="Service.Name"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
+                    <input asp-for="Service.Name" class="form-control" />
+                    <span asp-validation-for="Service.Name" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Price"></label>
+                    <label asp-for="Service.Price"></label>
                 </div>
                 <div class="col-8">
-                    <input asp-for="Price" id="txtPrice" class="form-control" />
-                    <span asp-validation-for="Price" class="text-danger"></span>
+                    <input asp-for="Service.Price" id="txtPrice" class="form-control" />
+                    <span asp-validation-for="Service.Price" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="Description"></label>
+                    <label asp-for="Service.Description"></label>
                 </div>
                 <div class="col-8">
-                    <textarea asp-for="Description" class="form-control" ></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
+                    <textarea asp-for="Service.Description" class="form-control" ></textarea>
+                    <span asp-validation-for="Service.Description" class="text-danger"></span>
+                </div>
+            </div> 
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Service.Labor.TimeOfJob"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Service.Labor.TimeOfJob" class="form-control" ></textarea>
+                    <span asp-validation-for="Service.Labor.TimeOfJob" class="text-danger"></span>
+                </div>
+            </div> 
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Service.Labor.PricePerHour"></label>
+                </div>
+                <div class="col-8">
+                    <textarea asp-for="Service.Labor.PricePerHour" class="form-control" ></textarea>
+                    <span asp-validation-for="Service.Labor.PricePerHour" class="text-danger"></span>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-4">
-                    <label asp-for="ImageUrl"></label>
+                    <label asp-for="Service.ImageUrl"></label>
                 </div>
                 <div class="col-8">
                     <input type="file" name="files" id="uploadBox" multiple class="form-control" />
@@ -65,10 +83,10 @@
             </div>*@
             <div class="form-group row">
                 <div class="col-8 offset-4">
-                    @if (Model.Id != 0)
+                    @if (Model.Service.Id != 0)
                     {
                         //Edit button and back to list
-                        <partial name="_EditBacktoList" model="Model.Id" />
+                        <partial name="_EditBacktoList" model="Model.Service.Id" />
                     }
                     else
                     {
@@ -84,10 +102,10 @@
                 </div>
             </div>
         </div>
-        @if (Model.Id != 0)
+        @if (Model.Service.Id != 0)
         {
             <div class="col-3">
-                <img src="@Model.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                <img src="@Model.Service.ImageUrl" width="100%" style="border-radius:5px; border:1px solid #bbb9b9" />
             </div>
         }
     </div>

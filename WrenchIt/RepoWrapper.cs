@@ -21,9 +21,9 @@ namespace WrenchIt.Data.RepositoryBase
             Labor = new LaborRepository(_context);
         }
 
-        public ICategoryRepository Category { get; set; }
-        public IServiceRepository Service { get; set; }
-        public ILaborRepository Labor { get; set; }
+        public ICategoryRepository Category { get; private set; }
+        public IServiceRepository Service { get; private set; }
+        public ILaborRepository Labor { get; private set; }
 
         public void Dispose()
         {

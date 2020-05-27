@@ -1,18 +1,18 @@
-﻿//var dataTable;
+﻿var dataTable;
 
 $(document).ready(function () {
     loadDataTable();
 });
 
 function loadDataTable() {
-   var dataTable = $('#tblData').DataTable({
+   dataTable = $('#tblData').DataTable({
         "ajax": {
             "url": "/labor/GetAll",
             "type": "Get",
             "datatype": "json"
         },
         "columns": [
-            { "data": "TimeOfJob", "width": "30%" },
+            { "data": "timeOfJob", "width": "30%" },
             { "data": "pricePerHour", "width": "30%" },
             {
                 "data": "id",
