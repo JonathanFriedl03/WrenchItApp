@@ -25,8 +25,8 @@ namespace WrenchIt.Controllers
         {
             return Json(new { data = _context.Category.GetAll() });
         }
-       
-        //edit update insert category
+
+        // GET: Category/Edit/5
         public IActionResult UpdateInsert(int? id)
         {
             Category category = new Category();
@@ -41,6 +41,9 @@ namespace WrenchIt.Controllers
             }
             return View(category);
         }
+        // POST: Category/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult UpdateInsert(Category category)
