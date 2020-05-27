@@ -24,7 +24,13 @@ namespace WrenchIt.Controllers
         {
             return View();
         }
-       
+
+        [HttpGet]
+        public IActionResult GetAll()
+        {
+            return Json(new { data = _context.Labor.GetAll() });
+        }
+
         // GET: Labor/Details/5
         public ActionResult Details(int id)
         {

@@ -36,10 +36,10 @@ namespace WrenchIt.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Service.GetAll() });
+            return Json(new { data = _context.Service.GetAll(includeProperties:"") });
         }
 
-        public IActionResult UpdateInsert(int? id)
+        public IActionResult Edit(int? id)
         {
             Service service = new Service();
             
@@ -54,7 +54,7 @@ namespace WrenchIt.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult UpdateInsert(Service service)
+        public IActionResult Edit(Service service)
         {
             if (ModelState.IsValid)
             {
@@ -111,29 +111,7 @@ namespace WrenchIt.Controllers
             {
                 return View(service);
             }
-        }
-        // GET: Service/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Service/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        }      
 
         // GET: Service/Delete/5
         [HttpDelete]
