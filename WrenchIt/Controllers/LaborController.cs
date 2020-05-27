@@ -98,9 +98,18 @@ namespace WrenchIt.Controllers
             return View(labor);
         }
         // GET: Labor/Delete/5
-        public ActionResult Delete(int id)
+        [HttpDelete]
+        public IActionResult Delete(int id)
         {
-            return View();
+            var objFromDb = _context.Labor.Get(id);
+            if (objFromDb == null)
+            {
+                return Json(new { success = false, message = "Error deleting." });
+            }
+            _context.Labor.Remove(objFromDb);
+            _context.Save();
+            return Json(new { success = true, message = "Delete successful." });
+
         }
 
         // POST: Labor/Delete/5
