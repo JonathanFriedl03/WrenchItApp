@@ -9,8 +9,7 @@ namespace WrenchIt.Models
     public class Labor
     {
         [Key]
-        public int Id { get; set; }
-        [Required]
+        public int Id { get; set; }       
         [Display(Name = "Time of Job")]
         public double TimeOfJob { get; set; }
         [Required]

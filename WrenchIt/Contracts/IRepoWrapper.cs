@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WrenchIt.Contracts;
 //using WrenchIt.Contracts;
 
 namespace WrenchIt.Data.RepositoryBase.IRepository
@@ -11,7 +12,7 @@ namespace WrenchIt.Data.RepositoryBase.IRepository
         //single transactions
         ICategoryRepository Category { get; }
         IServiceRepository Service { get; }
-        //ILaborRepository Labor { get; }
+        ILaborRepository Labor { get; }
         public void Save();
 
     }
