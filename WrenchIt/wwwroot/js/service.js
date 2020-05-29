@@ -11,11 +11,11 @@ function loadDataTable() {
             "datatype": "json"
         },
         "columns": [
-            { "data": "serviceName", "width": "20%" },
+            { "data": "name", "width": "20%" },
             { "data": "category.name", "width": "20%" },
-            { "data": "price", "width": "15%" },
-            { "data": "labor.timeOfJob", "width": "15%" },
-            { "data": "labor.pricePerHour", "width": "15%" },
+            //{ "data": "price", "width": "15%" },
+            { "data": "timeOfJob", "width": "15%" },
+            { "data": "pricePerHour", "width": "15%" },
             {
                 "data": "id",
                 "render": function (data) {

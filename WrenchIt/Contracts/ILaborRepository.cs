@@ -10,7 +10,8 @@ namespace WrenchIt.Contracts
 {
     public interface ILaborRepository : IRepoBase<Labor>
     {
-       
+        IEnumerable<SelectListItem> GetLaborListForDropDown();
+
         void Update(Labor labor);
     }
 }

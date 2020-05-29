@@ -16,7 +16,16 @@ namespace WrenchIt.Data.RepositoryBase
         {
             _context = context;
         }
-      
+
+        public IEnumerable<SelectListItem> GetLaborListForDropDown()
+        {
+            return _context.Labor.Select(i => new SelectListItem()
+            {
+                Text = i.PricePerHour.ToString(),
+                Value = i.Id.ToString()
+            });
+        }
+
         public void Update(Labor labor)
         {
             var objFromDb = _context.Labor.FirstOrDefault(i => i.Id == labor.Id);

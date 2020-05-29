@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json.Linq;
 using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 
@@ -33,6 +34,26 @@ namespace WrenchIt.Controllers
             return View();
         }
 
+        ///////////////////////////////////////////////////////////////////////////
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //public ActionResult Create(Service job) this would be a job crontroller
+        //{
+        //    // make your API call
+        //    // filter through the result to find the Customer's specific job type
+        //    job.Price = //do the math
+
+        //    _context.Jobs.Add(job);
+        //    _context.Save();
+
+        //    return View();
+        //}
+        ///////////////////////////////////////////////////////////////////////////
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -44,7 +65,7 @@ namespace WrenchIt.Controllers
             ServiceViewModel serviceViewModel = new ServiceViewModel()
             {
                 Service = new Models.Service(),
-                Labor = new Models.Labor(),
+                //Labor = new Models.Labor(),
                 CategoryList = _context.Category.GetCategoryListForDropDown(),
             };
             

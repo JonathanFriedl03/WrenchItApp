@@ -18,12 +18,12 @@ namespace WrenchIt.Data.RepositoryBase
             _context = context;
             Category = new CategoryRepository(_context);
             Service = new ServiceRepository(_context);
-            Labor = new LaborRepository(_context);
+           // Labor = new LaborRepository(_context);
         }
 
         public ICategoryRepository Category { get; private set; }
         public IServiceRepository Service { get; private set; }
-        public ILaborRepository Labor { get; private set; }
+       // public ILaborRepository Labor { get; private set; }
 
         public void Dispose()
         {

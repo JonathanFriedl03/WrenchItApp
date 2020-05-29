@@ -16,8 +16,13 @@ namespace WrenchIt.Models
         [Display(Name ="Service Name")]
         public string Name { get; set; }
 
-        [Required]
+        
         public double Price { get; set; }
+        [Display(Name = "Time of Job")]
+        public double TimeOfJob { get; set; }
+        [Required]
+        [Display(Name = "Price per Hour")]
+        public double PricePerHour { get; set; }
 
         public string Description { get; set; }
 
@@ -30,12 +35,7 @@ namespace WrenchIt.Models
        
         public Category Category{ get; set; }
 
-        [Required]
-        [ForeignKey("LaborId")]
-        public int LaborId { get; set; }
-
-        
-        public Labor Labor { get; set; }
+       
 
 
     }

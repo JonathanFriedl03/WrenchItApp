@@ -12,7 +12,7 @@ namespace WrenchIt.Data.RepositoryBase.IRepository
         //single transactions
         ICategoryRepository Category { get; }
         IServiceRepository Service { get; }
-        ILaborRepository Labor { get; }
+       // ILaborRepository Labor { get; }
         public void Save();
 
     }

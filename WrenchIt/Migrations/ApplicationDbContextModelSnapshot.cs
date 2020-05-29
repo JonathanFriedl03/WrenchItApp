@@ -48,15 +48,15 @@ namespace WrenchIt.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "e6df2e61-e189-4037-9f59-d3c29d721011",
-                            ConcurrencyStamp = "b4907a7f-a0e4-4ff3-8f37-54518642bd1d",
+                            Id = "778c061a-5a93-41f4-ad10-4799d1f53341",
+                            ConcurrencyStamp = "fccffe53-9f85-4dc7-8f2e-4d0182418339",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "e99c1d95-7cba-441e-a697-d46eef103c66",
-                            ConcurrencyStamp = "b0d972b6-1887-43d4-8f72-511eedc2c5d7",
+                            Id = "fac6a5c8-df0b-4924-8cff-1aeda850864b",
+                            ConcurrencyStamp = "438a2eab-97cb-4a60-95e3-3267cd2d6565",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -322,9 +322,6 @@ namespace WrenchIt.Migrations
                     b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("LaborId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -332,11 +329,15 @@ namespace WrenchIt.Migrations
                     b.Property<double>("Price")
                         .HasColumnType("float");
 
+                    b.Property<double>("PricePerHour")
+                        .HasColumnType("float");
+
+                    b.Property<double>("TimeOfJob")
+                        .HasColumnType("float");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("LaborId");
 
                     b.ToTable("Services");
                 });
@@ -423,12 +424,6 @@ namespace WrenchIt.Migrations
                     b.HasOne("WrenchIt.Models.Category", "Category")
                         .WithMany()
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("WrenchIt.Models.Labor", "Labor")
-                        .WithMany()
-                        .HasForeignKey("LaborId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WrenchIt.Migrations
 {
-    public partial class nuke : Migration
+    public partial class carModel : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -228,10 +228,11 @@ namespace WrenchIt.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
                     Price = table.Column<double>(nullable: false),
+                    TimeOfJob = table.Column<double>(nullable: false),
+                    PricePerHour = table.Column<double>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     ImageUrl = table.Column<string>(nullable: true),
-                    CategoryId = table.Column<int>(nullable: false),
-                    LaborId = table.Column<int>(nullable: false)
+                    CategoryId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -242,23 +243,17 @@ namespace WrenchIt.Migrations
                         principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Services_Labor_LaborId",
-                        column: x => x.LaborId,
-                        principalTable: "Labor",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e6df2e61-e189-4037-9f59-d3c29d721011", "b4907a7f-a0e4-4ff3-8f37-54518642bd1d", "Customer", "CUSTOMER" });
+                values: new object[] { "778c061a-5a93-41f4-ad10-4799d1f53341", "fccffe53-9f85-4dc7-8f2e-4d0182418339", "Customer", "CUSTOMER" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "e99c1d95-7cba-441e-a697-d46eef103c66", "b0d972b6-1887-43d4-8f72-511eedc2c5d7", "Employee", "EMPLOYEE" });
+                values: new object[] { "fac6a5c8-df0b-4924-8cff-1aeda850864b", "438a2eab-97cb-4a60-95e3-3267cd2d6565", "Employee", "EMPLOYEE" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -308,11 +303,6 @@ namespace WrenchIt.Migrations
                 name: "IX_Services_CategoryId",
                 table: "Services",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Services_LaborId",
-                table: "Services",
-                column: "LaborId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -336,6 +326,9 @@ namespace WrenchIt.Migrations
                 name: "Customers");
 
             migrationBuilder.DropTable(
+                name: "Labor");
+
+            migrationBuilder.DropTable(
                 name: "Services");
 
             migrationBuilder.DropTable(
@@ -349,9 +342,6 @@ namespace WrenchIt.Migrations
 
             migrationBuilder.DropTable(
                 name: "Category");
-
-            migrationBuilder.DropTable(
-                name: "Labor");
         }
     }
 }
