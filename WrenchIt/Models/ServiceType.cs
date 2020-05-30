@@ -12,9 +12,7 @@ namespace WrenchIt.Models
         [Required]
         public string Name { get; set; }
         public double Rate { get; set; }
-        public string Description { get; set; }
-
-        public long CategoryId { get; set; }
+        public string Description { get; set; }       
         public Category Category { get; set; }
     }
 }

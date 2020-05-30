@@ -31,21 +31,7 @@
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Service.PricePerHour"></label>
-                </div>
-                <div class="col-8">
-                    <input asp-for="Service.PricePerHour" id="txtPrice" class="form-control" />
-                    <span asp-validation-for="Service.PricePerHour" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="Service.TimeOfJob"></label>
-                </div>
-                <div class="col-8">
-                    <textarea asp-for="Service.TimeOfJob" id="txtPrice" class="form-control"></textarea>
-                    <span asp-validation-for="Service.TimeOfJob" class="text-danger"></span>
-                </div>
-            </div>
+                </div>               
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Service.Description"></label>
@@ -66,10 +52,10 @@
 
             <div class="form-group row">
             <div class="col-4">
-                <label asp-for="Service.CategoryId"></label>
+                <label asp-for="Service.ServiceType"></label>
             </div>
             <div class="col-8">
-                @Html.DropDownListFor(m => m.Service.CategoryId, Model.CategoryList, new { @class = "form-control" })
+                @Html.DropDownListFor(m => m.Service.ServiceTypeId, new SelectList(Model.ServiceTypeList, "id", "Name"), "Select Branch ", new { @class = "form-control", required = "required" })
             </div>
         </div>
             <div class="form-group row">

@@ -65,6 +65,7 @@ namespace WrenchIt.Controllers
             ServiceViewModel serviceViewModel = new ServiceViewModel()
             {
                 Service = new Models.Service(),
+                ServiceTypeList = _context.ServiceType.GetAll()
                 //Labor = new Models.Labor(),
                 //CategoryList = _context.Category.GetCategoryListForDropDown(),
             };
