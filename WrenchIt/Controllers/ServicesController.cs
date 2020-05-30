@@ -57,7 +57,7 @@ namespace WrenchIt.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Service.GetAll(includeProperties:"Category") });
+            return Json(new { data = _context.Service.GetAll() });
         }
 
         public IActionResult Edit(int? id)
@@ -66,7 +66,7 @@ namespace WrenchIt.Controllers
             {
                 Service = new Models.Service(),
                 //Labor = new Models.Labor(),
-                CategoryList = _context.Category.GetCategoryListForDropDown(),
+                //CategoryList = _context.Category.GetCategoryListForDropDown(),
             };
             
             

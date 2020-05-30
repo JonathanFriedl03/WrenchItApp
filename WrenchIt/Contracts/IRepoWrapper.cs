@@ -10,9 +10,9 @@ namespace WrenchIt.Data.RepositoryBase.IRepository
     public interface IRepoWrapper : IDisposable
     {
         //single transactions
-        ICategoryRepository Category { get; }
+       // ICategoryRepository Category { get; }
         IServiceRepository Service { get; }
-       // ILaborRepository Labor { get; }
+       IServiceTypeRepository ServiceType { get; }
         public void Save();
 
     }

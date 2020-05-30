@@ -8,10 +8,10 @@ using WrenchIt.Models;
 
 namespace WrenchIt.Contracts
 {
-    public interface ILaborRepository : IRepoBase<Labor>
+    public interface IServiceTypeRepository : IRepoBase<ServiceType>
     {
         IEnumerable<SelectListItem> GetLaborListForDropDown();
 
-        void Update(Labor labor);
+        void Update(ServiceType service);
     }
 }

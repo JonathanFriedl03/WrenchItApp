@@ -23,10 +23,10 @@ namespace WrenchIt.Data.RepositoryBase
 
             objFromDb.Name = service.Name;
             objFromDb.Description = service.Description;
-            objFromDb.PricePerHour = service.PricePerHour;
-            objFromDb.TimeOfJob = service.TimeOfJob;
+            objFromDb.ServiceTypeId = service.ServiceTypeId;            
             objFromDb.ImageUrl = service.ImageUrl;
-            objFromDb.CategoryId = service.CategoryId;           
+            objFromDb.ServiceTypeId = service.ServiceTypeId;
+
 
             _context.SaveChanges();
         }

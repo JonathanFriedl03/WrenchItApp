@@ -7,6 +7,7 @@ using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 
 
+
 namespace WrenchIt.Data.RepositoryBase
 {
     public class RepoWrapper : IRepoWrapper
@@ -18,11 +19,12 @@ namespace WrenchIt.Data.RepositoryBase
             _context = context;
             Category = new CategoryRepository(_context);
             Service = new ServiceRepository(_context);
-           // Labor = new LaborRepository(_context);
+            ServiceType = new ServiceTypeRepository(_context);
+            // Labor = new LaborRepository(_context);
         }
 
-        public ICategoryRepository Category { get; private set; }
-        public IServiceRepository Service { get; private set; }
+        //public ICategoryRepository Category { get; private set; }
+        public IServicetypeRepository Service { get; private set; }
        // public ILaborRepository Labor { get; private set; }
 
         public void Dispose()

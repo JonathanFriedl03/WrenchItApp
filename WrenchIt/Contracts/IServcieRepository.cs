@@ -7,8 +7,8 @@ using WrenchIt.Models;
 
 namespace WrenchIt.Data.RepositoryBase.IRepository
 {
-    public interface IServiceRepository : IRepoBase<Service>
+    public interface IServiceRepository : IRepoBase<ServiceType>
     {
-       void Update(Service service);
+       void Update(ServiceType service);
     }
 }
