@@ -10,10 +10,13 @@ namespace WrenchIt.Data.RepositoryBase.IRepository
     public interface IRepoWrapper : IDisposable
     {
         //single transactions
-        // ICategoryRepository Category { get; }
-        ICarRepository Car { get; }
         IServiceRepository Service { get; }
-       IServiceTypeRepository ServiceType { get; }
+        IServiceTypeRepository ServiceType { get; }
+
+        ICarRepository Car { get; }
+        ICustomerRepository Customer { get; }
+        IEmployeeRepository Employee { get; }
+
         public void Save();
 
     }

@@ -10,7 +10,7 @@ namespace WrenchIt.Contracts
 {
     public interface IServiceTypeRepository : IRepoBase<ServiceType>
     {
-        IEnumerable<SelectListItem> GetLaborListForDropDown();
+        //IEnumerable<SelectListItem> GetLaborListForDropDown();
 
         void Update(ServiceType service);
     }

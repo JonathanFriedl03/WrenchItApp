@@ -1,40 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WrenchIt.Data;
-using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 
 namespace WrenchIt.Controllers
 {
-    public class CustomersController : Controller
+    public class EmployeeController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private static HttpClient client = new HttpClient();
-        private readonly IRepoWrapper _newContext;
-        private readonly IWebHostEnvironment _hostEnvironment;
 
-        public CustomersController(IRepoWrapper newContext, IWebHostEnvironment hostEnvironment, ApplicationDbContext context)
+        public EmployeeController(ApplicationDbContext context)
         {
             _context = context;
-            _newContext = newContext;
-            _hostEnvironment = hostEnvironment;
         }
 
-        // GET: Customers
+        // GET: Employees
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Customers.Include(c => c.IdentityUser);
+            var applicationDbContext = _context.Employees.Include(c => c.IdentityUser);
             return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Customers/Details/5
+        // GET: Employees/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,7 +34,7 @@ namespace WrenchIt.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var customer = await _context.Employees
                 .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
@@ -53,14 +45,14 @@ namespace WrenchIt.Controllers
             return View(customer);
         }
 
-        // GET: Customers/Create
+        // GET: Employees/Create
         public IActionResult Create()
         {
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Customers/Create
+        // POST: Employees/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -77,7 +69,7 @@ namespace WrenchIt.Controllers
             return View(customer);
         }
 
-        // GET: Customers/Edit/5
+        // GET: Employees/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -85,7 +77,7 @@ namespace WrenchIt.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers.FindAsync(id);
+            var customer = await _context.Employees.FindAsync(id);
             if (customer == null)
             {
                 return NotFound();
@@ -94,7 +86,7 @@ namespace WrenchIt.Controllers
             return View(customer);
         }
 
-        // POST: Customers/Edit/5
+        // POST: Employees/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -130,7 +122,7 @@ namespace WrenchIt.Controllers
             return View(customer);
         }
 
-        // GET: Customers/Delete/5
+        // GET: Employees/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -138,7 +130,7 @@ namespace WrenchIt.Controllers
                 return NotFound();
             }
 
-            var customer = await _context.Customers
+            var customer = await _context.Employees
                 .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (customer == null)
@@ -149,20 +141,20 @@ namespace WrenchIt.Controllers
             return View(customer);
         }
 
-        // POST: Customers/Delete/5
+        // POST: Employees/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var customer = await _context.Customers.FindAsync(id);
-            _context.Customers.Remove(customer);
+            var employee = await _context.Employees.FindAsync(id);
+            _context.Employees.Remove(employee);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool CustomerExists(int id)
         {
-            return _context.Customers.Any(e => e.Id == id);
+            return _context.Employees.Any(e => e.Id == id);
         }
     }
 }

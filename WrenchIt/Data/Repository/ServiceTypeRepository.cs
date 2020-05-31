@@ -9,7 +9,7 @@ using WrenchIt.Models;
 
 namespace WrenchIt.Data.RepositoryBase
 {
-    public class ServiceTypeRepository : RepositoryBase<Service>, IServiceTypeRepository
+    public class ServiceTypeRepository : RepositoryBase<ServiceType>, IServiceTypeRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -19,18 +19,15 @@ namespace WrenchIt.Data.RepositoryBase
         }
                
         public void Update(ServiceType serviceType)
-        {
-            throw new NotImplementedException();
-            //var  objFromDb = _context.Services.FirstOrDefault(i => i.Id == service.Id);
+        {            
+            var objFromDb = _context.ServiceTypes.FirstOrDefault(i => i.Id == serviceType.Id);
+            objFromDb.Name = serviceType.Name;
+            objFromDb.Description = serviceType.Description;
+            objFromDb.Rate = serviceType.Rate;
+            objFromDb.Category = serviceType.Category;
 
-            //objFromDb.Name = service.Name;
-            //objFromDb.Description = service.Description;
-            //objFromDb.PricePerHour = service.PricePerHour;
-            //objFromDb.TimeOfJob = service.TimeOfJob;
-            //objFromDb.ImageUrl = service.ImageUrl;
-            //objFromDb.CategoryId = service.CategoryId;           
 
-            //_context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

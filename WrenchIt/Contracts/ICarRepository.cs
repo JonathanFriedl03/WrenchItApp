@@ -9,8 +9,8 @@ namespace WrenchIt.Data.RepositoryBase.IRepository
 {
     public interface ICarRepository : IRepoBase<Car>
     {
-      
-
+        IEnumerable<Car> GetCustomerCars(int id);
         void Update(Car car);
+        
     }
 }

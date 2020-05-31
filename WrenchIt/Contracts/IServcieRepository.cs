@@ -10,7 +10,7 @@ namespace WrenchIt.Data.RepositoryBase.IRepository
     public interface IServiceRepository : IRepoBase<Service>
     {
         IEnumerable<Service> GetAllServices();
-
+        Service GetServiceWithType(int id);
 
         void Update(Service service);
     }

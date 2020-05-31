@@ -58,7 +58,7 @@ namespace WrenchIt.Controllers
         public IActionResult GetAll()
         {
             var data = _context.Service.GetAllServices();
-            return Json(new { data = _context.Service.GetAllServices() });
+            return Json(new { data = _context.Service.GetAllServices()});
         }
 
         public IActionResult Edit(int? id)
@@ -66,9 +66,7 @@ namespace WrenchIt.Controllers
             ServiceViewModel serviceViewModel = new ServiceViewModel()
             {
                 Service = new Models.Service(),
-                ServiceTypeList = _context.ServiceType.GetAll()
-                //Labor = new Models.Labor(),
-                //CategoryList = _context.Category.GetCategoryListForDropDown(),
+                ServiceTypeList = _context.ServiceType.GetAll()                
             };
             
             

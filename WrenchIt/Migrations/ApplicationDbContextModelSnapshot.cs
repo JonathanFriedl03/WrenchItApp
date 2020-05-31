@@ -48,15 +48,15 @@ namespace WrenchIt.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "778c061a-5a93-41f4-ad10-4799d1f53341",
-                            ConcurrencyStamp = "fccffe53-9f85-4dc7-8f2e-4d0182418339",
+                            Id = "5ffe8a2c-d5cc-4877-b55b-62c9c88ee0cd",
+                            ConcurrencyStamp = "21149e8c-f782-4a09-98fa-f95a5e0c88e7",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         },
                         new
                         {
-                            Id = "fac6a5c8-df0b-4924-8cff-1aeda850864b",
-                            ConcurrencyStamp = "438a2eab-97cb-4a60-95e3-3267cd2d6565",
+                            Id = "0e62c851-e9ec-4a89-9162-08faba1849c4",
+                            ConcurrencyStamp = "120d4651-6627-47d6-bfb7-285352d5c27c",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -231,23 +231,37 @@ namespace WrenchIt.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("WrenchIt.Models.Category", b =>
+            modelBuilder.Entity("WrenchIt.Models.Car", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("DisplayOrder")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
+                    b.Property<long>("Miles")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Model")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
-                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Vin")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Category");
+                    b.HasIndex("CustomerId")
+                        .IsUnique();
+
+                    b.ToTable("Cars");
                 });
 
             modelBuilder.Entity("WrenchIt.Models.Customer", b =>
@@ -260,8 +274,8 @@ namespace WrenchIt.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Car")
-                        .HasColumnType("int");
+                    b.Property<double>("CarID")
+                        .HasColumnType("float");
 
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
@@ -288,22 +302,39 @@ namespace WrenchIt.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("WrenchIt.Models.Labor", b =>
+            modelBuilder.Entity("WrenchIt.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<double>("PricePerHour")
-                        .HasColumnType("float");
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("TimeOfJob")
-                        .HasColumnType("float");
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("State")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ZipCode")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Labor");
+                    b.HasIndex("IdentityUserId");
+
+                    b.ToTable("Employees");
                 });
 
             modelBuilder.Entity("WrenchIt.Models.Service", b =>
@@ -312,9 +343,6 @@ namespace WrenchIt.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -326,18 +354,15 @@ namespace WrenchIt.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
-                        .HasColumnType("float");
-
                     b.Property<double>("PricePerHour")
                         .HasColumnType("float");
 
-                    b.Property<double>("TimeOfJob")
-                        .HasColumnType("float");
+                    b.Property<int>("ServiceTypeId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("ServiceTypeId");
 
                     b.ToTable("Services");
                 });
@@ -349,11 +374,17 @@ namespace WrenchIt.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("Category")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Price")
+                    b.Property<double>("Rate")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -412,7 +443,23 @@ namespace WrenchIt.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WrenchIt.Models.Car", b =>
+                {
+                    b.HasOne("WrenchIt.Models.Customer", "Customer")
+                        .WithOne("Car")
+                        .HasForeignKey("WrenchIt.Models.Car", "CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("WrenchIt.Models.Customer", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
+                        .WithMany()
+                        .HasForeignKey("IdentityUserId");
+                });
+
+            modelBuilder.Entity("WrenchIt.Models.Employee", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
@@ -421,9 +468,9 @@ namespace WrenchIt.Migrations
 
             modelBuilder.Entity("WrenchIt.Models.Service", b =>
                 {
-                    b.HasOne("WrenchIt.Models.Category", "Category")
+                    b.HasOne("WrenchIt.Models.ServiceType", "ServiceType")
                         .WithMany()
-                        .HasForeignKey("CategoryId")
+                        .HasForeignKey("ServiceTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

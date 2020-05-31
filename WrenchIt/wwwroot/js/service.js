@@ -12,10 +12,9 @@ function loadDataTable() {
         },
         "columns": [
             { "data": "name", "width": "20%" },
-            { "data": "category.name", "width": "20%" },
-            //{ "data": "price", "width": "15%" },
-            { "data": "timeOfJob", "width": "15%" },
-            { "data": "pricePerHour", "width": "15%" },
+            { "data": "serviceType.name", "width": "20%" },
+            { "data": "image", "width": "20%" },
+            { "data": "description", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
