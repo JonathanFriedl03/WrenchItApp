@@ -1,18 +1,17 @@
 ﻿var dataTable;
-
 $(document).ready(function () {
     loadDataTable();
+
 });
 
 function loadDataTable() {
-    dataTable = $('#tblData').DataTable({
-   
+    var table = $("#tblData").DataTable({
         "language": {
             "emptyTable": "No records found."
-       
         }
     }
     );
+
 
 }
 
@@ -26,17 +25,16 @@ function Delete(url) {
 
     }, function () {
         $.ajax({
-            type: 'DELETE',
+            type: 'Delete',
             url: url,
             success: function (data) {
-               if (data.success) {
-                  toastr.success(data.message);
-                  dataTable.ajax.reload();
+                if (data.success) {
+                    dataTable.ajax.reload();
                 }
                 else {
-                      toastr.error(data.message);
-                     }
+                    toastr.error(data.message);
                 }
+            }
         });
     });
 }

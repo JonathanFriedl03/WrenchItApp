@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WrenchIt.Models.ServiceRequestViewModel>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+
+<div class="border backgroundWhite">
+    <div class="row">
+        <div class="col-6">
+            <h2 class="text-primary">Service Request List</h2>
+        </div>
+
+    </div>
+    <br />
+    <br />
+
+
+    <table id="tblData" class="table table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>Service Name</th>
+                <th>Customer Name</th>
+                <th>Quote($)</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var data in Model)
+            {
+                <tr>
+                    <td>@data.Name</td>
+                    <td>@data.Customer</td>
+                    <td>@data.Quote .00</td>
+
+                    @if (data.IsCompleted)
+                    {
+                        <td class="bg-success">Completed</td>
+
+                    }
+                    else
+                    {
+                        <td class="bg-danger">In complete</td>
+                    }
+                    <td>@data.CreatedAt</td>
+
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+@section Scripts{
+    <script src="~/js/serviceType.js"></script>
+}

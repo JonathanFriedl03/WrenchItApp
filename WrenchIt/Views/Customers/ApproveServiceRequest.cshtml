@@ -1,0 +1,83 @@
+﻿@model WrenchIt.Models.ApproveServiceViewModel
+@{
+    var title = "Update Service Request";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post" asp-action="Approve" enctype="multipart/form-data">
+
+    <div class="row px-2 mx-2 backgroundWhite border">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+        <div class="col-12">
+            <h2 class="text-primary">@title</h2>
+            <br />
+        </div>
+        <div class="col-9">
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Service.Name"></label>
+                </div>
+                @Html.Hidden("serviceId", Model.Service.Id)
+                @Html.DisplayFor(model => model.Service.Name)
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Service.ServiceType.Name">Service Type</label>
+                </div>
+                <div class="col-8">
+                    @Html.DisplayFor(model => model.Service.ServiceType.Name)
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Service.ServiceType.Name">Service Category</label>
+                </div>
+                <div class="col-8">
+                    @Html.DisplayFor(model => model.Service.ServiceType.Category)
+
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Service.Description"></label>
+                </div>
+                <div class="col-8">
+                    @Html.DisplayFor(model => model.Service.Description)
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Quote"></label>
+                </div>
+                <div class="col-8">
+                    <b>   $ @Html.DisplayFor(model => model.Quote).00 </b>
+
+                </div>
+            </div>
+            <input type="hidden" id="userId" asp-for="Service.Id" />
+
+            <div class="form-group row">
+                <div class="col-8">
+
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-success form-control">Approve</button>
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-danger form-control">Cancel</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</form>
