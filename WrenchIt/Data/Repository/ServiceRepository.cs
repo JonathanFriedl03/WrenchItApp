@@ -16,7 +16,13 @@ namespace WrenchIt.Data.RepositoryBase
         {
             _context = context;
         }
-               
+
+        public IEnumerable<Service> GetAllServices()
+        {
+
+            return _context.Services.Include(c => c.ServiceType).OrderByDescending(c => c.Id).ToList();
+        }
+
         public void Update(Service service)
         {
             var  objFromDb = _context.Services.FirstOrDefault(i => i.Id == service.Id);
@@ -25,7 +31,7 @@ namespace WrenchIt.Data.RepositoryBase
             objFromDb.Description = service.Description;
             objFromDb.ServiceTypeId = service.ServiceTypeId;            
             objFromDb.ImageUrl = service.ImageUrl;
-            objFromDb.ServiceTypeId = service.ServiceTypeId;
+           // objFromDb.ServiceTypeId = service.ServiceTypeId;
 
 
             _context.SaveChanges();

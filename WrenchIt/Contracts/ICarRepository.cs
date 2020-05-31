@@ -7,11 +7,10 @@ using WrenchIt.Models;
 
 namespace WrenchIt.Data.RepositoryBase.IRepository
 {
-    public interface IServiceRepository : IRepoBase<Service>
+    public interface ICarRepository : IRepoBase<Car>
     {
-        IEnumerable<Service> GetAllServices();
+      
 
-
-        void Update(Service service);
+        void Update(Car car);
     }
 }

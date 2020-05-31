@@ -21,7 +21,9 @@ namespace WrenchIt.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            var data = _context.ServiceType.GetAll();
+
+            return View(data);
         }
         [HttpGet]
         public IActionResult GetAll()

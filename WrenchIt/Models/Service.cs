@@ -24,14 +24,9 @@ namespace WrenchIt.Models
         [DataType(DataType.ImageUrl)]
         [Display(Name = "Image")]
         public string ImageUrl { get; set; }
-        public double CarId { get; set; }
-        public Car Car { get; set; }
-        public double ServiceTypeId { get; set; }
-        public  ServiceType ServiceType { get; set; }
-       
-        public Category Category{ get; set; }
-
-       
+        public int ServiceTypeId { get; set; }       
+        public  ServiceType ServiceType { get; set; }     
+             
 
 
     }

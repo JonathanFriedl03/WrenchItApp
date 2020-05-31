@@ -18,7 +18,7 @@ namespace WrenchIt.Data.RepositoryBase
             _context = context;
         }
                
-        public void Update(ServiceType service)
+        public void Update(ServiceType serviceType)
         {
             throw new NotImplementedException();
             //var  objFromDb = _context.Services.FirstOrDefault(i => i.Id == service.Id);

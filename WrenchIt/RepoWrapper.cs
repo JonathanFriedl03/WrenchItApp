@@ -17,7 +17,7 @@ namespace WrenchIt.Data.RepositoryBase
         public RepoWrapper(ApplicationDbContext context)
         {
             _context = context;
-            Category = new CategoryRepository(_context);
+            //Category = new CategoryRepository(_context);
             Service = new ServiceRepository(_context);
             ServiceType = new ServiceTypeRepository(_context);
             // Labor = new LaborRepository(_context);

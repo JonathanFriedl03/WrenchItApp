@@ -57,7 +57,8 @@ namespace WrenchIt.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            return Json(new { data = _context.Service.GetAll() });
+            var data = _context.Service.GetAllServices();
+            return Json(new { data = _context.Service.GetAllServices() });
         }
 
         public IActionResult Edit(int? id)
