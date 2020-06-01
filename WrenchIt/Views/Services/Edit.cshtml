@@ -11,7 +11,7 @@
         @if (Model.Service.Id != 0)
         {
             <input type="hidden" asp-for="Service.Id" />
-            title = "Edit Service";
+            title = "Edit ServiceType";
         }
 
         <div class="col-12">
@@ -28,10 +28,7 @@
                     <span asp-validation-for="Service.Name" class="text-danger"></span>
                 </div>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label asp-for="Service.PricePerHour"></label>
-                </div>               
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Service.Description"></label>
@@ -40,7 +37,8 @@
                     <textarea asp-for="Service.Description" class="form-control"></textarea>
                     <span asp-validation-for="Service.Description" class="text-danger"></span>
                 </div>
-            </div>          
+            </div>
+
             <div class="form-group row">
                 <div class="col-4">
                     <label asp-for="Service.ImageUrl"></label>
@@ -51,13 +49,15 @@
             </div>
 
             <div class="form-group row">
-            <div class="col-4">
-                <label asp-for="Service.ServiceType"></label>
+                <div class="col-4">
+                    <label asp-for="Service.ServiceType"></label>
+                </div>
+                <div class="col-8">
+                    @Html.DropDownListFor(m => m.Service.ServiceTypeId, new SelectList(Model.ServiceTypeList, "Id", "Name"), "Select Service Type ", new { @class = "form-control", required = "required" })
+
+                </div>
             </div>
-            <div class="col-8">
-                @Html.DropDownListFor(m => m.Service.ServiceTypeId, new SelectList(Model.ServiceTypeList, "Id", "Name"), "Select Type ", new { @class = "form-control", required = "required" })
-            </div>
-        </div>
+
             <div class="form-group row">
                 <div class="col-8 offset-4">
                     @if (Model.Service.Id != 0)
@@ -90,8 +90,7 @@
 </form>
 
 @section Scripts{
-    <script>    
-
+    <script>
         $(document).ready(function () {
             if (document.getElementById('txtPrice').value == "0") {
                 document.getElementById('txtPrice').value = '';
@@ -99,5 +98,3 @@
         });
     </script>
 }
-
-

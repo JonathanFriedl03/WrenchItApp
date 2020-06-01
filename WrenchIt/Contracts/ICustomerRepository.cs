@@ -9,10 +9,6 @@ namespace WrenchIt.Contracts
 {
     public interface ICustomerRepository : IRepoBase<Customer>
     {
-        //Customer GetCustomer(int? customerId);
-        //Customer GetCustomer(string userId);
-        //void CreateCustomer(Customer customer);
-        //void EditCustomer(Customer customer);
-        //void DeleteCustomer(int customerId);
+        Customer GetByUserId(string id);
     }
 }

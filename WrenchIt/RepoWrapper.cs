@@ -24,6 +24,7 @@ namespace WrenchIt.Data.RepositoryBase
             Customer = new CustomerRepository(_context);
         }
 
+
         public IServiceRepository Service { get; private set; }
 
         public IServiceTypeRepository ServiceType { get; private set; }
@@ -41,7 +42,7 @@ namespace WrenchIt.Data.RepositoryBase
 
         public void Save()
         {
-          _context.SaveChanges();
+            _context.SaveChanges();
         }
     }
 }

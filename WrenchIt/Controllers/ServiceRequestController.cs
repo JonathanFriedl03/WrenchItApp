@@ -24,8 +24,6 @@ namespace WrenchIt.Controllers
         private static HttpClient client = new HttpClient();
         private readonly IRepoWrapper _context;
         private readonly IWebHostEnvironment _hostEnvironment;
-
-
         public ServiceRequestController(IRepoWrapper context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
@@ -33,47 +31,106 @@ namespace WrenchIt.Controllers
         }
         public IActionResult Index()
         {
-            var url = baseurl + "services";
+            var uri = baseurl + "services";
             object data = null;
             try
             {
-                var responseTask = client.GetAsync(url).Result;
+                var responseTask = client.GetAsync(uri).Result;
                 data = responseTask.Content.ReadAsStringAsync().Result;
-
             }
             catch (Exception exception)
             {
                 data = exception;
             }
-
             dynamic response = JsonConvert.DeserializeObject(data.ToString());
-            //List<ServiceRequest> results = response.ToObject<List<ServiceRequest>>();
+            List<ServiceRequest> results = response.ToObject<List<ServiceRequest>>();
             var viewModel = new List<ServiceRequestViewModel>();
+            foreach (var item in results)
+            {
+                var model = viewModel.FirstOrDefault();
 
-            //foreach (var item in results)
-            //{
-            //    var model = viewModel.FirstOrDefault();
-            //    if (model == null) //the transaction is unique
-            //    {
-            //        model = new ServiceRequestViewModel
-            //        {
-            //            Id = item.ServiceId,
-            //            Name = _context.Service.Get(item.ServiceId).Name,
-            //            Customer = _context.Customer.Get(item.CustomerId).FirstName,
-            //            Quote = item.PriceQuotation,
-            //            IsCompleted = item.IsCompleted,
-            //            CreatedAt = item.CreatedAt
-            //        };
-            //        viewModel.Add(model);
-            //    }
-            //}
+                model = new ServiceRequestViewModel
+                {
+                    Id = item.Id,
+                    ServiceId = item.ServiceId,
+                    Name = _context.Service.Get(item.ServiceId).Name,
+                    Customer = _context.Customer.Get(item.CustomerId).FirstName,
+                    Quote = item.PriceQuotation,
+                    IsCompleted = item.IsCompleted,
+                    CreatedAt = item.CreatedAt
+                };
+                viewModel.Add(model);
 
-
-
-
-
+            }
+            return View(viewModel);
+        }
+        public IActionResult Edit(int? id)
+        {
+            var uri = baseurl + "services/GetService/" + id;
+            object data = null;
+            try
+            {
+                var responseTask = client.GetAsync(uri).Result;
+                data = responseTask.Content.ReadAsStringAsync().Result;
+            }
+            catch (Exception exception)
+            {
+                data = exception;
+            }
+            dynamic response = JsonConvert.DeserializeObject(data.ToString());
+            ServiceRequest item = response.ToObject<ServiceRequest>();
+            var viewModel = new ServiceRequestViewModel
+            {
+                Id = item.Id,
+                ServiceId = item.ServiceId,
+                Name = _context.Service.Get(item.ServiceId).Name,
+                Customer = _context.Customer.Get(item.CustomerId).FirstName,
+                Quote = item.PriceQuotation,
+                IsCompleted = item.IsCompleted,
+                CreatedAt = item.CreatedAt
+            };
 
             return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Edit(ServiceRequestViewModel request)
+        {
+            var uri = baseurl + "services/GetService/" + request.Id;
+            object data = null;
+            try
+            {
+                var responseTask = client.GetAsync(uri).Result;
+                data = responseTask.Content.ReadAsStringAsync().Result;
+            }
+            catch (Exception exception)
+            {
+                data = exception;
+            }
+            dynamic response = JsonConvert.DeserializeObject(data.ToString());
+            ServiceRequest item = response.ToObject<ServiceRequest>();
+            item.IsCompleted = true;
+            if (ModelState.IsValid)
+            {
+                object output = null;
+                var url = baseurl + "services/PutService";
+                var jsonObject = JsonConvert.SerializeObject(item);
+                HttpContent c = new StringContent(jsonObject, System.Text.Encoding.UTF8, "application/json");
+                try
+                {
+                    var responseTask = client.PutAsync(url, c).Result;
+                    output = responseTask.Content.ReadAsStringAsync().Result;
+                }
+                catch (Exception exception)
+                {
+                    output = exception;
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return View(request);
+            }
         }
     }
 }

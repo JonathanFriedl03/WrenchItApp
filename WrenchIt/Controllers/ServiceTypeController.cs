@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +11,7 @@ using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Models;
 namespace WrenchIt.Controllers
 {
+    [Authorize]
     public class ServiceTypeController : Controller
     {
         private readonly IRepoWrapper _context;
@@ -32,25 +34,15 @@ namespace WrenchIt.Controllers
             //return Json(new { data = _context.ServiceType.GetAll(includeProperties: "Category") });
             return Json(new { data = _context.ServiceType.GetAll() });
         }
-
         public IActionResult Edit(int? id)
         {
-
             var serviceType = new ServiceType();
-            ServiceViewModel serviceViewModel = new ServiceViewModel()
-            {
-                Service = new Models.Service(),
-                ServiceTypeList = _context.ServiceType.GetAll()
-                //   CategoryList = _context.Category.GetCategoryListForDropDown(),
-            };
-
 
             if (id != null)
             {
                 serviceType = _context.ServiceType.Get(id.GetValueOrDefault());
             }
-            return View(new ServiceType());
-
+            return View(serviceType);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -58,8 +50,6 @@ namespace WrenchIt.Controllers
         {
             if (ModelState.IsValid)
             {
-                string webRootPath = _hostEnvironment.WebRootPath;
-                var files = HttpContext.Request.Form.Files;
                 if (serviceType.Id == 0)
                 {
                     //new service service type
@@ -80,6 +70,5 @@ namespace WrenchIt.Controllers
                 return View(serviceType);
             }
         }
-
     }
 }

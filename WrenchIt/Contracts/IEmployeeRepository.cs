@@ -9,10 +9,6 @@ namespace WrenchIt.Contracts
 {
     public interface IEmployeeRepository : IRepoBase<Employee>
     {
-        //Employee GetEmployee(int? employeeId);
-        //Employee GetEmployee(string userId);
-        //void CreateEmployee(Employee employee);
-        //void EditEmployee(Employee employee);
-        //void DeleteEmployee(int employeeId);
+
     }
 }

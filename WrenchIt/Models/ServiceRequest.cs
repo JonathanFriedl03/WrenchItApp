@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Text;
 
 namespace WrenchIt.Models
 {
-    public class ServiceRequestViewModel
+    public class ServiceRequest
     {
         public int Id { get; set; }
-
         public int ServiceId { get; set; }
-        public string Name { get; set; }
-        public string Customer { get; set; }
-
-        public double Quote { get; set; }
-        public bool IsCompleted { get; set; }
+        public int CustomerId { get; set; }
+        public double PriceQuotation { get; set; }
         public DateTime CreatedAt { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

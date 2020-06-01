@@ -18,5 +18,9 @@ namespace WrenchIt.Data
             _context = context;
         }
 
+        public Customer GetByUserId(string id)
+        {
+            return _context.Customers.Where(c => c.IdentityUserId == id).FirstOrDefault();
+        }
     }
 }
