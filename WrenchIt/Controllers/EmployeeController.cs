@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using WrenchIt.Data.RepositoryBase.IRepository;
+using WrenchIt.Models;
 
 namespace WrenchIt.Controllers
 {
@@ -30,8 +31,19 @@ namespace WrenchIt.Controllers
 
         public IActionResult Create()
         {
-
             return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Employee.Add(employee);
+                _context.Save();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(employee);
         }
     }
 }

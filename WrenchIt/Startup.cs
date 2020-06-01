@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Http;
 using WrenchIt.IActionFilters;
 using WrenchIt.Data.RepositoryBase.IRepository;
 using WrenchIt.Data.RepositoryBase;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace WrenchIt
 {
@@ -32,6 +34,7 @@ namespace WrenchIt
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDirectoryBrowser();
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("sqlConnection")));
@@ -52,6 +55,7 @@ namespace WrenchIt
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseStaticFiles();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -63,10 +67,21 @@ namespace WrenchIt
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseHttpsRedirection();        
 
             app.UseRouting();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images")),
+                RequestPath = new PathString("/servicePics")
+            });
+            app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), @"wwwroot\Images")),
+                RequestPath = new PathString("/servicePics")
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();

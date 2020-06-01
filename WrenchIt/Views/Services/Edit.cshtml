@@ -44,7 +44,9 @@
                     <label asp-for="Service.ImageUrl"></label>
                 </div>
                 <div class="col-8">
-                    <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                    <input type="file" name="files" id="uploadBox" multiple class="form-control" required />
+                    <span asp-validation-for="Service.ImageUrl" class="text-danger"></span>
+
                 </div>
             </div>
 
@@ -78,6 +80,7 @@
                     }
                 </div>
             </div>
+
         </div>
         @if (Model.Service.Id != 0)
         {
@@ -88,13 +91,3 @@
     </div>
 
 </form>
-
-@section Scripts{
-    <script>
-        $(document).ready(function () {
-            if (document.getElementById('txtPrice').value == "0") {
-                document.getElementById('txtPrice').value = '';
-            }
-        });
-    </script>
-}

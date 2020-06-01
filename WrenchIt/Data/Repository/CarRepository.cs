@@ -22,7 +22,6 @@ namespace WrenchIt.Data.RepositoryBase
         public IEnumerable<Car> GetCustomerCars(int id)
         {
             return _context.Cars.OrderByDescending(c => c.Id).Where(c => c.CustomerId == id).ToList();
-
         }
 
         public void Update(Car car)

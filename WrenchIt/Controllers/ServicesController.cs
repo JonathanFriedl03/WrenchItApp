@@ -30,9 +30,8 @@ namespace WrenchIt.Controllers
         // GET: Service
         public IActionResult Index()
         {
-            var data = User.Claims.ToList();
-            //var data = _context.Service.GetAll(includeProperties: "ServiceType");
-            return View();
+            var serviceList = _context.Service.GetAllServices();
+            return View(serviceList);
         }
         [HttpGet]
         public IActionResult GetAll()
