@@ -25,6 +25,7 @@ namespace WrenchIt.Controllers
         private static HttpClient client = new HttpClient();
         private readonly IRepoWrapper _newContext;
         private readonly IWebHostEnvironment _hostEnvironment;
+
         public CustomersController(IRepoWrapper newContext, IWebHostEnvironment hostEnvironment, ApplicationDbContext context)
         {
             _context = context;
@@ -32,12 +33,26 @@ namespace WrenchIt.Controllers
             _hostEnvironment = hostEnvironment;
         }
 
+
         // GET: Customers
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Customers.Include(c => c.IdentityUser);
-            return View(await applicationDbContext.ToListAsync());
+            if (User.IsInRole("Customer"))
+            {
+                var claimsIdentity = (ClaimsIdentity)this.User.Identity;
+                var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+                var userId = claim.Value;
+                List<Customer> cust = new List<Customer>();
+                var loggedInCustomer = _newContext.Customer.GetByUserId(userId);
+
+                cust.Add(loggedInCustomer);
+
+                return View(cust);
+            }
+            var customers = _newContext.Customer.GetAll();
+            return View(customers);
         }
+
         // GET: Customers/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -45,6 +60,7 @@ namespace WrenchIt.Controllers
             {
                 return NotFound();
             }
+
             var customer = await _context.Customers
                 .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -52,14 +68,17 @@ namespace WrenchIt.Controllers
             {
                 return NotFound();
             }
+
             return View(customer);
         }
+
         // GET: Customers/Create
         public IActionResult Create()
         {
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
+
 
         public IActionResult ServiceRequests(int? id)
         {
@@ -69,14 +88,17 @@ namespace WrenchIt.Controllers
             {
                 var responseTask = client.GetAsync(uri).Result;
                 data = responseTask.Content.ReadAsStringAsync().Result;
+
             }
             catch (Exception exception)
             {
                 data = exception;
             }
+
             dynamic response = JsonConvert.DeserializeObject(data.ToString());
             List<ServiceRequest> results = response.ToObject<List<ServiceRequest>>();
             var viewModel = new List<ServiceRequestViewModel>();
+
             foreach (var item in results)
             {
                 var model = viewModel.FirstOrDefault();
@@ -95,6 +117,7 @@ namespace WrenchIt.Controllers
             }
             return View(viewModel);
         }
+
         public IActionResult CreateServiceRequest()
         {
             var viewModel = new CServiceRequestViewModel()
@@ -104,6 +127,7 @@ namespace WrenchIt.Controllers
             };
             return View(viewModel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult CreateServiceRequest(ServiceRequest request)
@@ -119,6 +143,7 @@ namespace WrenchIt.Controllers
         {
             var service = _newContext.Service.GetServiceWithType(serviceId);
             double quote;
+
             if (service.ServiceType.Category == Category.Maintenance)
             {
                 quote = service.ServiceType.Rate * 2;
@@ -138,50 +163,54 @@ namespace WrenchIt.Controllers
             };
             return View(viewModel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Approve(IFormCollection formCollection)
+        public IActionResult Approve(IFormCollection formControll)
         {
             var claimsIdentity = (ClaimsIdentity)this.User.Identity;
             var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
             var userId = claim.Value;
-            var id = formCollection["serviceId"];
-            var service = _newCont
-                t.Service.Get(Convert.ToInt32(id));
+            var id = formControll["serviceId"];
+            var service = _newContext.Service.Get(Convert.ToInt32(id));
 
-
-            var test = _newContext.Customer.GetByUserId(userId).Id;
 
             var serviceRequest = new ServiceRequest()
             {
-                ServiceId = service.Id,              
+                ServiceId = service.Id,
                 CustomerId = _newContext.Customer.GetByUserId(userId).Id,
                 PriceQuotation = CalculateQuote(service.Id),
                 CreatedAt = DateTime.Now,
                 IsCompleted = false
             };
+
             if (ModelState.IsValid)
             {
                 object output = null;
                 var url = baseurl + "/services/PostService";
                 var jsonObject = JsonConvert.SerializeObject(serviceRequest);
-                HttpContent context = new StringContent(jsonObject, System.Text.Encoding.UTF8, "application/json");
+                HttpContent c = new StringContent(jsonObject, System.Text.Encoding.UTF8, "application/json");
+
                 try
                 {
-                    var responseTask = client.PostAsync(url, context).Result;
+                    var responseTask = client.PostAsync(url, c).Result;
                     output = responseTask.Content.ReadAsStringAsync().Result;
                 }
                 catch (Exception exception)
                 {
                     output = exception;
                 }
+
                 return RedirectToAction(nameof(Index));
             }
             else
             {
-                return View(formCollection);
+                return View(formControll);
             }
         }
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Customer customer)
@@ -202,6 +231,7 @@ namespace WrenchIt.Controllers
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
+
         // GET: Customers/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -209,6 +239,7 @@ namespace WrenchIt.Controllers
             {
                 return NotFound();
             }
+
             var customer = await _context.Customers.FindAsync(id);
             if (customer == null)
             {
@@ -218,6 +249,7 @@ namespace WrenchIt.Controllers
             return View(customer);
         }
 
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,FirstName,LastName,Address,City,State,ZipCode,Car,IdentityUserId")] Customer customer)
@@ -226,6 +258,7 @@ namespace WrenchIt.Controllers
             {
                 return NotFound();
             }
+
             if (ModelState.IsValid)
             {
                 try
@@ -249,6 +282,7 @@ namespace WrenchIt.Controllers
             ViewData["IdentityUserId"] = new SelectList(_context.Users, "Id", "Id", customer.IdentityUserId);
             return View(customer);
         }
+
         // GET: Customers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -256,6 +290,7 @@ namespace WrenchIt.Controllers
             {
                 return NotFound();
             }
+
             var customer = await _context.Customers
                 .Include(c => c.IdentityUser)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -263,8 +298,10 @@ namespace WrenchIt.Controllers
             {
                 return NotFound();
             }
+
             return View(customer);
         }
+
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -275,6 +312,7 @@ namespace WrenchIt.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
         private bool CustomerExists(int id)
         {
             return _context.Customers.Any(e => e.Id == id);

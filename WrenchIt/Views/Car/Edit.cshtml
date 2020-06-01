@@ -66,28 +66,28 @@
                 </div>
             </div>
 
-
-        </div>
-        <div class="form-group row">
-            <div class="col-8 offset-4">
-                @if (Model.Id != 0)
-                {
-                    //Edit button and back to list
-                    <partial name="_EditBacktoList" model="Model.Id" />
-                }
-                else
-                {
-                    <div class="row">
-                        <div class="col">
-                            <button type="submit" class="btn btn-primary form-control">Create</button>
+            <div class="form-group row">
+                <div class="col-8 offset-4">
+                    @if (Model.Id != 0)
+                    {
+                        //Edit button and back to list
+                        <partial name="_EditBacktoList" model="Model.Id" />
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col">
+                                <button type="submit" class="btn btn-primary form-control">Create</button>
+                            </div>
+                            <div class="col">
+                                <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                            </div>
                         </div>
-                        <div class="col">
-                            <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
-                        </div>
-                    </div>
-                }
+                    }
+                </div>
             </div>
         </div>
+
     </div>
 </form>
 

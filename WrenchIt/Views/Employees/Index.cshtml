@@ -1,20 +1,13 @@
-﻿@model IEnumerable<WrenchIt.Models.Customer>
+﻿@model IEnumerable<WrenchIt.Models.Employee>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Employee";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<h1>Employees</h1>
 
 <p>
-    @* <a asp-action="Create">Create New</a>*@
-    @if (User.IsInRole("Customer"))
-    {
-
-        <a asp-action="CreateServiceRequest">Create Service Request</a>
-
-    }
 </p>
 <table class="table" id="tblData">
     <thead>
@@ -66,15 +59,7 @@
                 </td>
 
 
-                <td>
-                    @if (User.IsInRole("Customer"))
-                    {
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    }
 
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-
-                </td>
             </tr>
         }
     </tbody>

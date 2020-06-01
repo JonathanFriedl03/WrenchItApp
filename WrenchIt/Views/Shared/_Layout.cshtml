@@ -22,28 +22,45 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarColor01">
+                @if (User.Identity.IsAuthenticated)
+                {
 
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link " asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Content Managment
-                        </a>
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link " asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
 
-                        <div class="dropdown-menu" aria-labelledby="navbarDropDown">
-                            <a class="dropdown-item text-white " asp-controller="Services" asp-action="Index">Services</a>
-                            <a class="dropdown-item text-white " asp-controller="Customers" asp-action="Index">Customers</a>
-                            <a class="dropdown-item text-white " asp-controller="ServiceType" asp-action="Index">ServiceType</a>
-                            <a class="dropdown-item text-white " asp-controller="Car" asp-action="Index">Add a Car</a>
-                            <a class="dropdown-item text-white " asp-controller="ServiceRequest" asp-action="Index">service request</a>
-                        </div>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Content Managment
+                            </a>
 
 
 
-                </ul>
 
+                            <div class="dropdown-menu" aria-labelledby="navbarDropDown">
+                                @if (User.IsInRole("Employee"))
+                                {
+
+
+                                    <a class="dropdown-item text-white " asp-controller="Services" asp-action="Index">Services</a>
+                                    <a class="dropdown-item text-white " asp-controller="Customers" asp-action="Index">Customers</a>
+                                    <a class="dropdown-item text-white " asp-controller="ServiceType" asp-action="Index">ServiceType</a>
+                                    <a class="dropdown-item text-white " asp-controller="ServiceRequest" asp-action="Index">service request</a>
+                                }
+                                @if (User.IsInRole("Customer"))
+                                {
+                                    <a class="dropdown-item text-white " asp-controller="Car" asp-action="Index">Car Management</a>
+                                    <a class="dropdown-item text-white " asp-controller="Customers" asp-action="CreateServiceRequest">Service Request</a>
+                                    <a class="dropdown-item text-white " asp-controller="Customers" asp-action="Index">Customers</a>
+
+
+                                }
+                            </div>
+
+                    </ul>
+
+                }
 
             </div>
             <partial name="_LoginPartial" />

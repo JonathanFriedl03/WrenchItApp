@@ -1,38 +1,18 @@
 ﻿var dataTable;
 $(document).ready(function () {
     loadDataTable();
+
 });
 
 function loadDataTable() {
-     dataTable = $('#tblData').DataTable({
-        "ajax": {
-            "url": "/services/GetAll",
-            "type": "Get",
-            "datatype": "json"
-        },
-        "columns": [
-            { "data": "name", "width": "20%" },
-            { "data": "serviceType.name", "width": "20%" },
-            { "data": "image", "width": "20%" },
-            { "data": "description", "width": "20%" },
-            {
-                "data": "id",
-                "render": function (data) {
-                    return `<div class="text-center">
-                                <a href="/services/Edit/${data}" class='btn btn-success text-white' style='cursor:pointer; width:100px;'>
-                                <i class ='far fa-edit'></i> Edit </a>
-                                &nbsp;
-                                <a onclick=Delete("/services/Delete/${data}") class='btn btn-danger text-white' style='cursor:pointer; width:100px;'>
-                                <i class ='far fa-trash-alt'></i> Delete </a>
-                            </div>`;
-                }, "width": "30%"
-            }
-        ],//display data when there is none
+    var table = $("#tblData").DataTable({
         "language": {
             "emptyTable": "No records found."
-        },
-        "width": "100%"
-    });
+        }
+    }
+    );
+
+
 }
 
 function Delete(url) {
